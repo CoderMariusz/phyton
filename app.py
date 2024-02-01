@@ -16,7 +16,7 @@ def update_counter():
             time.sleep(10)
             counter += random.randint(1, 3)
         
-        with open("counter.txt", "w") as file:
+        with open("/disk/counter.txt", "w") as file:
             file.write(json.dumps({"count": counter}))
         
         counter = 0
@@ -28,7 +28,7 @@ def watch_file():
         if os.path.exists("counter.txt"):
             current_size = os.path.getsize("counter.txt")
             if current_size != last_size:
-                with open("counter.txt", "r") as file:
+                with open("/disk/counter.txt", "r") as file:
                     data = file.read()
                     print(data)
                     return data
