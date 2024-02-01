@@ -41,7 +41,7 @@ app = Flask(__name__)
 @app.route('/get_counter', methods=['GET'])
 def get_counter():
     try:
-        with open("counter.txt", "r") as file:
+        with open("/disk/counter.txt", "r") as file:
             data = json.load(file)
             return jsonify(data)
     except Exception as e:
