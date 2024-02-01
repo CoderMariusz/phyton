@@ -8,6 +8,8 @@ from flask import Flask, jsonify
 # Global counter
 counter = 0
 
+file_path = "disk/counter.txt"
+
 # Function to update the counter and write to file
 def update_counter():
     global counter
@@ -16,7 +18,7 @@ def update_counter():
             time.sleep(10)
             counter += random.randint(1, 3)
         
-        with open("/disk/counter.txt", "w") as file:
+        with open(file_path, "w") as file:
             file.write(json.dumps({"count": counter}))
         
         counter = 0
@@ -25,10 +27,10 @@ def update_counter():
 def watch_file():
     last_size = 0
     while True:
-        if os.path.exists("counter.txt"):
+        if os.path.exists(file_path):
             current_size = os.path.getsize("counter.txt")
             if current_size != last_size:
-                with open("/disk/counter.txt", "r") as file:
+                with open(file_path, "r") as file:
                     data = file.read()
                     print(data)
                     return data
@@ -41,7 +43,7 @@ app = Flask(__name__)
 @app.route('/get_counter', methods=['GET'])
 def get_counter():
     try:
-        with open("/disk/counter.txt", "r") as file:
+        with open(file_path, "r") as file:
             data = json.load(file)
             return jsonify(data)
     except Exception as e:
