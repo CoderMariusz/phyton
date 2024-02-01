@@ -31,6 +31,7 @@ def watch_file():
                 with open("counter.txt", "r") as file:
                     data = file.read()
                     print(data)
+                    return data
                 last_size = current_size
         time.sleep(1)
 
