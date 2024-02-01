@@ -18,24 +18,25 @@ def update_counter():
             time.sleep(10)
             counter += random.randint(0, 3)
         
-        with open(file_path, "w") as file:
-            file.write(json.dumps({"count": counter}))
+            with open(file_path, "w") as file:
+                file.write(json.dumps({"count": counter}))
         
         counter = 0
 
 # Function to watch the file and print updates
-def watch_file():
-    last_size = 0
+def watch_file(file_path):
+    last_modified = None
     while True:
         if os.path.exists(file_path):
-            current_size = os.path.getsize("counter.txt")
-            if current_size != last_size:
+            current_modified = os.path.getmtime(file_path)
+            if current_modified != last_modified:
                 with open(file_path, "r") as file:
                     data = file.read()
                     print(data)
-                last_size = current_size
-                return data
+                last_modified = current_modified
+                # removed return statement to allow continuous monitoring
         time.sleep(1)
+
 
 # Flask Web Server
 app = Flask(__name__)
