@@ -34,6 +34,7 @@ def watch_file():
                     data = file.read()
                     print(data)
                 last_size = current_size
+                return data
         time.sleep(1)
 
 # Flask Web Server
