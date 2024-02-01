@@ -8,7 +8,7 @@ from flask import Flask, jsonify
 # Global counter
 counter = 0
 
-file_path = "disk/counter.txt"
+file_path = "/disk/counter.txt"
 
 # Function to update the counter and write to file
 def update_counter():
