@@ -45,7 +45,7 @@ def get_counter():
             data = json.load(file)
             return jsonify(data)
     except Exception as e:
-        return jsonify({"error": str(e)})
+        return jsonify({"error": e})
 
 # Start the counter and watcher threads
 counter_thread = threading.Thread(target=update_counter)
