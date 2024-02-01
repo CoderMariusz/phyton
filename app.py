@@ -16,7 +16,7 @@ def update_counter():
     while True:
         for _ in range(6):  # 6 times for 60 seconds
             time.sleep(10)
-            counter += random.randint(1, 3)
+            counter += random.randint(0, 3)
         
         with open(file_path, "w") as file:
             file.write(json.dumps({"count": counter}))
