@@ -10,18 +10,38 @@ counter = 0
 
 file_path = "counter.txt"
 
+lines_Details = [
+    {   "line": 1,
+        "count": 0,
+        "maxCount": 12
+    },
+    {   "line": 2,
+        "count": 0,
+        "maxCount": 16
+    },
+    {
+        "line": 3,
+        "count": 0,
+        "maxCount": 8
+    }
+]
+
 # Function to update the counter and write to file
 def update_counter():
-    global counter
     while True:
-        for _ in range(6):  # 6 times for 60 seconds
-            time.sleep(10)
-            counter += random.randint(0, 3)
+        for _ in range(2):  # 6 times for 60 seconds
+            time.sleep(30)
+            for line_detail in lines_Details:
+                # Update count for each line
+                line_detail["count"] += random.randint(0, line_detail["maxCount"]/2)
         
-            with open(file_path, "w") as file:
-                file.write(json.dumps({"count": counter}))
+        # Write updated details to file
+        with open(file_path, "w") as file:
+            file.write(json.dumps(lines_Details))
         
-        counter = 0
+        # Reset counts for each line
+        for line_detail in lines_Details:
+            line_detail["count"] = 0
 
 # Function to watch the file and print updates
 def watch_file(file_path):
