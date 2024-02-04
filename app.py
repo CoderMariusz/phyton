@@ -9,6 +9,8 @@ from flask import Flask, jsonify
 counter = 0
 
 file_path = "counter.txt"
+hour_production_path = "hour_production.txt"
+total_production = 0 
 
 lines_Details = [
     {   "line": 1,
@@ -26,24 +28,43 @@ lines_Details = [
     }
 ]
 
-# Function to update the counter and write to file
+
+# Function to read the last total production
+def read_last_total_production():
+    try:
+        with open(hour_production_path, "r") as file:
+            data = json.load(file)
+            return data.get("totalProduction", 0)
+    except FileNotFoundError:
+        return 0
+    except json.JSONDecodeError:
+        return 0
+
 def update_counter():
+    total_production = read_last_total_production()
+
     while True:
-        for _ in range(2):  # 6 times for 60 seconds
-            time.sleep(30)
+        for _ in range(6):  # 6 times for 60 seconds
+            time.sleep(10)
             for line_detail in lines_Details:
-                # Update count for each line
-                line_detail["count"] += random.randint(0, line_detail["maxCount"]/2)
-        
+                increment = random.randint(0, line_detail["maxCount"])
+                line_detail["count"] += increment
+                total_production += increment
+
         # Write updated details to file
         with open(file_path, "w") as file:
-            file.write(json.dumps(lines_Details))
-        
+            file.write(json.dumps(file_path))
+
+        # Update hour_production file with new total production
+        with open(hour_production_path, "w") as file:
+            file.write(json.dumps({"totalProduction": total_production}))
+
         # Reset counts for each line
         for line_detail in lines_Details:
             line_detail["count"] = 0
-
 # Function to watch the file and print updates
+
+
 def watch_file(file_path):
     last_modified = None
     while True:
@@ -65,6 +86,15 @@ app = Flask(__name__)
 def get_counter():
     try:
         with open(file_path, "r") as file:
+            data = json.load(file)
+            return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": e})
+    
+@app.route('/get_hour_production', methods=['GET'])
+def get_counter():
+    try:
+        with open(hour_production_path, "r") as file:
             data = json.load(file)
             return jsonify(data)
     except Exception as e:
