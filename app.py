@@ -92,7 +92,7 @@ def get_counter():
         return jsonify({"error": e})
     
 @app.route('/get_hour_production', methods=['GET'])
-def get_counter():
+def get_hour_production():
     try:
         with open(hour_production_path, "r") as file:
             data = json.load(file)
