@@ -10,7 +10,7 @@ from flask import Flask, jsonify
 counter = 0
 
 file_path = "counter.txt"
-hour_production_path = "hour_production.txt"
+hour_production_path = "hour_production.json"
 total_production = 0 
 
 lines_Details = [
