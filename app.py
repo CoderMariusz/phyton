@@ -60,7 +60,7 @@ def update_counter():
         time.sleep(60)
         for line_detail in lines_Details:
             increment = random.randint(0, line_detail["maxCount"])
-            line_detail["count"] = ["count", increment]
+            line_detail["count"] = increment
             total_production += increment
 
         # Write updated details to file
