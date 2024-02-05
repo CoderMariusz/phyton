@@ -3,6 +3,7 @@ import time
 import random
 import json
 import os
+from datetime import datetime
 from flask import Flask, jsonify
 
 # Global counter
@@ -39,21 +40,32 @@ def read_last_total_production():
         return 0
     except json.JSONDecodeError:
         return 0
+    
+# Function to reset the hour production
+def reset_hour_production():
+    with open(hour_production_path, "w") as file:
+        file.write(json.dumps({"totalProduction": 0}))
 
 def update_counter():
     total_production = read_last_total_production()
 
     while True:
-        for _ in range(6):  # 6 times for 60 seconds
-            time.sleep(10)
-            for line_detail in lines_Details:
-                increment = random.randint(0, line_detail["maxCount"])
-                line_detail["count"] = ["count", increment]
-                total_production += increment
+        current_time = datetime.now()
+        # Check if it's the first minute of an hour
+        if current_time.minute == 38 and current_time.second == 0:
+            reset_hour_production()
+            total_production = 0
+
+ # 6 times for 60 seconds
+        time.sleep(60)
+        for line_detail in lines_Details:
+            increment = random.randint(0, line_detail["maxCount"])
+            line_detail["count"] = ["count", increment]
+            total_production += increment
 
         # Write updated details to file
         with open(file_path, "w") as file:
-            file.write(json.dumps(file_path))
+            file.write(json.dumps(lines_Details))
 
         # Update hour_production file with new total production
         with open(hour_production_path, "w") as file:
