@@ -48,13 +48,15 @@ def reset_hour_production():
 
 def update_counter():
     total_production = read_last_total_production()
+    print(f"Initial total production: {total_production}")
 
     while True:
         current_time = datetime.now()
         # Check if it's the first minute of an hour
-        if current_time.minute == 56 and current_time.second == 0:
+        if current_time.minute == 4 and current_time.second == 20:
             reset_hour_production()
             total_production = 0
+            
 
  # 6 times for 60 seconds
         time.sleep(60)
