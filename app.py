@@ -54,7 +54,7 @@ def update_counter():
     while True:
         current_time = datetime.now()
         # Check if it's the first minute of an hour
-        if current_time.minute == 21: 
+        if current_time.minute == 30: 
             reset_hour_production()
             total_production = 0
             
