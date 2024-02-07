@@ -5,6 +5,7 @@ import json
 import os
 from datetime import datetime
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 # Global counter
 counter = 0
@@ -95,6 +96,7 @@ def watch_file(file_path):
 
 # Flask Web Server
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/get_counter', methods=['GET'])
 def get_counter():
