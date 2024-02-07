@@ -5,6 +5,7 @@ import json
 import os
 from datetime import datetime
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 # Global counter
 counter = 0
@@ -53,7 +54,7 @@ def update_counter():
     while True:
         current_time = datetime.now()
         # Check if it's the first minute of an hour
-        if current_time.minute == 4 and current_time.second == 20:
+        if current_time.minute == 21: 
             reset_hour_production()
             total_production = 0
             
@@ -95,6 +96,7 @@ def watch_file(file_path):
 
 # Flask Web Server
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/get_counter', methods=['GET'])
 def get_counter():
