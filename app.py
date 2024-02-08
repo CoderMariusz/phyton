@@ -36,7 +36,7 @@ lines_Details = [
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/": {"origins": ["http://localhost:3000", "https://www.forzademo.co.uk/productionLive"]}})
+CORS(app, resources={r"*": {"origins": ["https://www.forzademo.co.uk", "https://www.forzademo.co.uk/productionLive", "http://localhost:3000", "http://localhost:3000/productionLive"]}})
 
 # Function to read the last total production
 def read_last_total_production():
