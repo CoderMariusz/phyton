@@ -8,8 +8,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 
-app = Flask(__name__)
-CORS(app, resources={r"/": {"origins": ["http://localhost:3000", "https://www.forzademo.co.uk/productionLive"]}})
+
 
 
 # Global counter
@@ -35,6 +34,9 @@ lines_Details = [
     }
 ]
 
+
+app = Flask(__name__)
+CORS(app, resources={r"/": {"origins": ["http://localhost:3000", "https://www.forzademo.co.uk/productionLive"]}})
 
 # Function to read the last total production
 def read_last_total_production():
